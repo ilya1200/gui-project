@@ -15,20 +15,20 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         self.start_btn.clicked.connect(self.run_tests)
         self.stop_btn.clicked.connect(self.stop_all_tests)
         self.clear_btn.clicked.connect(self.clear)
+        self.current_dir = ""
 
     def browse_folder(self):
-        directory = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
-        if directory:
+        self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
+        if self.current_dir:
             self.listWidget.clear()
-            for file_name in os.listdir(directory):  # для каждого файла в директории
+            for file_name in os.listdir(self.current_dir):  # для каждого файла в директории
                 self.listWidget.addItem(file_name)
 
     def run_tests(self):
-        subprocess.call('start', shell=True)
-        # directory = QtWidgets.QFileDialog.fileSelected(self, 'listWidget')
-        # if directory:
-        #     for file_name in directory:
-        #         subprocess.call(directory, shell=True)
+        subprocess.call('start', shell=True, cwd=self.current_dir)
+        if self.current_dir:
+            for file_name in os.listdir(self.current_dir):
+                subprocess.call(f"node {file_name}", shell=True, cwd=self.current_dir)
 
     def stop_all_tests(self):
         print("All tests stopped")
@@ -42,6 +42,7 @@ def main():
     window = ExampleApp()  # Создаём объект класса ExampleApp
     window.show()  # Показываем окно
     app.exec_()  # и запускаем приложение
+
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем
     main()  # то запускаем функцию main()
