@@ -31,31 +31,22 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
                 item.setCheckState(0, QtCore.Qt.Unchecked)
 
     def find_checked(self):
-        checked = dict()
+        checked_items = list()
         root = self.treeWidget.invisibleRootItem()
-        signal_count = root.childCount()
+        child_count = root.childCount()
 
-        for i in range(signal_count):
-            signal = root.child(i)
-            checked_sweeps = list()
-            num_children = signal.childCount()
-
-            for n in range(num_children):
-                child = signal.child(n)
-
-                if child.checkState(0) == QtCore.Qt.Checked:
-                    checked_sweeps.append(child.text(0))
-
-            checked[signal.text(0)] = checked_sweeps
-
-        return checked
+        for i in range(child_count):
+            i_child = root.child(i)
+            if i_child.checkState(0) == QtCore.Qt.Checked:
+                checked_items.append(i_child.text(0))
+        return checked_items
 
     def run_checked_tests(self):
-        checked_tests = self.find_checked()
-        # subprocess.call('start', shell=True, cwd=self.current_dir)
-        for file_name in checked_tests:
-            print(file_name)
-            # subprocess.call(f"node {file_name}", shell=True, cwd=self.current_dir)
+        checked_files = self.find_checked()
+        subprocess.call('start', shell=True, cwd=self.current_dir)
+        for file_name in checked_files:
+            print(f"Run file: {file_name}")
+            subprocess.call(f"node {file_name}", shell=True, cwd=self.current_dir)
 
     # def run_tests(self):
     #     subprocess.call('start', shell=True, cwd=self.current_dir)
