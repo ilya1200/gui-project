@@ -11,11 +11,12 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+        self.current_dir = ""
         self.select_folder_btn.clicked.connect(self.browse_folder)
         self.start_btn.clicked.connect(self.run_tests)
         self.stop_btn.clicked.connect(self.stop_all_tests)
         self.clear_btn.clicked.connect(self.clear)
-        self.current_dir = ""
 
     def browse_folder(self):
         self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
