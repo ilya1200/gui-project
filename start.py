@@ -48,12 +48,6 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             print(f"Run file: {file_name}")
             subprocess.call(f"node {file_name}", shell=True, cwd=self.current_dir)
 
-    # def run_tests(self):
-    #     subprocess.call('start', shell=True, cwd=self.current_dir)
-    #     if self.current_dir:
-    #         for file_name in os.listdir(self.current_dir):
-    #             subprocess.call(f"node {file_name}", shell=True, cwd=self.current_dir)
-
     def stop_all_tests(self):
         print("All tests stopped")
 
