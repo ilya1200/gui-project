@@ -21,20 +21,24 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         self.stop_btn.clicked.connect(self.stop_all_tests)
         self.clear_btn.clicked.connect(self.clear)
 
+        self.file_types = {
+            ".js": "node",
+            ".py": "python"
+        }
+
     def browse_folder(self):
-        allowed_files = [".js", ".py"]
         self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
         if self.current_dir:
             self.treeWidget.clear()
-            for file_name in os.listdir(self.current_dir):  # для каждого файла в директории
-                if self.is_allowed_file(file_name, allowed_files):
+            for file_name in os.listdir(self.current_dir):  # for each file in directory
+                if self.is_allowed_file(file_name):
                     item = QtWidgets.QTreeWidgetItem(self.treeWidget, [file_name])
                     item.setCheckState(0, QtCore.Qt.Unchecked)
 
-    def is_allowed_file(self, file_name, allowed_files):
-        if not allowed_files:
+    def is_allowed_file(self, file_name):
+        if not self.file_types:
             return True
-        for eof in allowed_files:
+        for eof in self.file_types:
             if file_name.endswith(eof):
                 return True
         return False
@@ -51,12 +55,13 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         return checked_items
 
     def run_file_with(self, file_name):
-        if file_name.endswith(".js"):
-            return "node"
-        elif file_name.endswith(".py"):
-            return "python"
-        else:
+        if not self.file_types:
             return ""
+
+        for eof in self.file_types:
+            if file_name.endswith(eof):
+                return self.file_types[eof]
+        return ""
 
     def run_checked_tests(self):
         checked_files = self.find_checked()
