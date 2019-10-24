@@ -26,9 +26,10 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         if self.current_dir:
             self.treeWidget.clear()
             for file_name in os.listdir(self.current_dir):  # для каждого файла в директории
-                # if file_name ends with '.js': FILTERING
-                item = QtWidgets.QTreeWidgetItem(self.treeWidget, [file_name])
-                item.setCheckState(0, QtCore.Qt.Unchecked)
+                if file_name.endswith(".js"):
+                    print(f"Add file to list: {file_name}")
+                    item = QtWidgets.QTreeWidgetItem(self.treeWidget, [file_name])
+                    item.setCheckState(0, QtCore.Qt.Unchecked)
 
     def find_checked(self):
         checked_items = list()
