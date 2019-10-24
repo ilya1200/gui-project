@@ -50,12 +50,20 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
                 checked_items.append(i_child.text(0))
         return checked_items
 
+    def run_file_with(self, file_name):
+        if file_name.endswith(".js"):
+            return "node"
+        elif file_name.endswith(".py"):
+            return "python"
+        else:
+            return ""
+
     def run_checked_tests(self):
         checked_files = self.find_checked()
         subprocess.call('start', shell=True, cwd=self.current_dir)
         for file_name in checked_files:
             print(f"Run file: {file_name}")
-            subprocess.call(f"node {file_name}", shell=True, cwd=self.current_dir)
+            subprocess.call(f"{self.run_file_with(file_name)} {file_name}", shell=True, cwd=self.current_dir)
 
     def stop_all_tests(self):
         print("All tests stopped")
