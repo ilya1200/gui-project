@@ -69,6 +69,15 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         for file_name in checked_files:
             print(f"Run file: {file_name}")
             subprocess.call(f"{self.run_file_with(file_name)} {file_name}", shell=True, cwd=self.current_dir)
+            self.print_logs()
+
+    def print_logs(self):
+        logger_file_path = self.current_dir + "/log/"
+        for file in os.listdir(logger_file_path):
+            if file.endswith(".log"):
+                logger_file_full_path = logger_file_path+file
+                with open(logger_file_full_path, "r") as logger_file:
+                    print(logger_file.read())
 
     def stop_all_tests(self):
         print("All tests stopped")
