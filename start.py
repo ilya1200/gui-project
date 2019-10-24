@@ -17,7 +17,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
 
         self.current_dir = ""
         self.select_folder_btn.clicked.connect(self.browse_folder)
-        self.start_btn.clicked.connect(self.run_tests)
+        self.start_btn.clicked.connect(self.run_checked_tests)
         self.stop_btn.clicked.connect(self.stop_all_tests)
         self.clear_btn.clicked.connect(self.clear)
 
@@ -26,18 +26,42 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         if self.current_dir:
             self.treeWidget.clear()
             for file_name in os.listdir(self.current_dir):  # для каждого файла в директории
+                # if file_name ends with '.js': FILTERING
                 item = QtWidgets.QTreeWidgetItem(self.treeWidget, [file_name])
                 item.setCheckState(0, QtCore.Qt.Unchecked)
-                print(item.checkState(0))
-                # if item.checkState(0) == QtCore.Qt.Checked:
-                #     print(file_name)
-                # else:
-                #     print("els")
-    def run_tests(self):
-        subprocess.call('start', shell=True, cwd=self.current_dir)
-        if self.current_dir:
-            for file_name in os.listdir(self.current_dir):
-                subprocess.call(f"node {file_name}", shell=True, cwd=self.current_dir)
+
+    def find_checked(self):
+        checked = dict()
+        root = self.treeWidget.invisibleRootItem()
+        signal_count = root.childCount()
+
+        for i in range(signal_count):
+            signal = root.child(i)
+            checked_sweeps = list()
+            num_children = signal.childCount()
+
+            for n in range(num_children):
+                child = signal.child(n)
+
+                if child.checkState(0) == QtCore.Qt.Checked:
+                    checked_sweeps.append(child.text(0))
+
+            checked[signal.text(0)] = checked_sweeps
+
+        return checked
+
+    def run_checked_tests(self):
+        checked_tests = self.find_checked()
+        # subprocess.call('start', shell=True, cwd=self.current_dir)
+        for file_name in checked_tests:
+            print(file_name)
+            # subprocess.call(f"node {file_name}", shell=True, cwd=self.current_dir)
+
+    # def run_tests(self):
+    #     subprocess.call('start', shell=True, cwd=self.current_dir)
+    #     if self.current_dir:
+    #         for file_name in os.listdir(self.current_dir):
+    #             subprocess.call(f"node {file_name}", shell=True, cwd=self.current_dir)
 
     def stop_all_tests(self):
         print("All tests stopped")
