@@ -22,14 +22,22 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         self.clear_btn.clicked.connect(self.clear)
 
     def browse_folder(self):
+        allowed_files = [".js", ".py"]
         self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
         if self.current_dir:
             self.treeWidget.clear()
             for file_name in os.listdir(self.current_dir):  # для каждого файла в директории
-                if file_name.endswith(".js"):
-                    print(f"Add file to list: {file_name}")
+                if self.is_allowed_file(file_name, allowed_files):
                     item = QtWidgets.QTreeWidgetItem(self.treeWidget, [file_name])
                     item.setCheckState(0, QtCore.Qt.Unchecked)
+
+    def is_allowed_file(self, file_name, allowed_files):
+        if not allowed_files:
+            return True
+        for eof in allowed_files:
+            if file_name.endswith(eof):
+                return True
+        return False
 
     def find_checked(self):
         checked_items = list()
