@@ -75,15 +75,15 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         logger_file_path = self.current_dir + "/log/"
         for file in os.listdir(logger_file_path):
             if file.endswith(".log"):
-                logger_file_full_path = logger_file_path+file
+                logger_file_full_path = logger_file_path + file
                 with open(logger_file_full_path, "r") as logger_file:
-                    print(logger_file.read())
+                    self.logBrowser.append(logger_file.read())
 
     def stop_all_tests(self):
         print("All tests stopped")
 
     def clear(self):
-        self.treeWidget.clear()
+        self.logBrowser.clear()
 
 
 def main():
