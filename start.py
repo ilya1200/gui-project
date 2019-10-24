@@ -3,7 +3,7 @@ import sys
 import os
 from builtins import super
 
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 import pygui
 
 
@@ -11,6 +11,9 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+        self.treeWidget.setHeaderLabels(['Files'])
+        self.treeWidget.setAlternatingRowColors(True)
 
         self.current_dir = ""
         self.select_folder_btn.clicked.connect(self.browse_folder)
@@ -21,10 +24,15 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
     def browse_folder(self):
         self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
         if self.current_dir:
-            self.listWidget.clear()
+            self.treeWidget.clear()
             for file_name in os.listdir(self.current_dir):  # для каждого файла в директории
-                self.listWidget.addItem(file_name)
-
+                item = QtWidgets.QTreeWidgetItem(self.treeWidget, [file_name])
+                item.setCheckState(0, QtCore.Qt.Unchecked)
+                print(item.checkState(0))
+                # if item.checkState(0) == QtCore.Qt.Checked:
+                #     print(file_name)
+                # else:
+                #     print("els")
     def run_tests(self):
         subprocess.call('start', shell=True, cwd=self.current_dir)
         if self.current_dir:
@@ -35,7 +43,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         print("All tests stopped")
 
     def clear(self):
-        self.listWidget.clear()
+        self.treeWidget.clear()
 
 
 def main():
