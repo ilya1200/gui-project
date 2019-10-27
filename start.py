@@ -65,7 +65,6 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
 
     def run_checked_tests(self):
         checked_files = self.find_checked()
-        subprocess.call('start', shell=True, cwd=self.current_dir)
         for file_name in checked_files:
             print(f"Run file: {file_name}")
             subprocess.call(f"{self.run_file_with(file_name)} {file_name}", shell=True, cwd=self.current_dir)
