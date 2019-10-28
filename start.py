@@ -4,6 +4,7 @@ import sys
 import os
 import psutil
 from builtins import super
+from datetime import date
 
 from PyQt5 import QtWidgets, QtCore
 from PyQt5.QtGui import QCursor
@@ -115,8 +116,11 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         for file in os.listdir(logger_file_path):
             if file.endswith(".log"):
                 logger_file_full_path = logger_file_path + file
-                with open(logger_file_full_path, "r") as logger_file:
-                    self.logBrowser.append(logger_file.read())
+                logger_file = open(logger_file_full_path, "r")
+                log_content = logger_file.read()
+                self.logBrowser.append(log_content)
+                with open(logger_file_path+str(date.today())+".log", "w") as other_logger_file:
+                    other_logger_file.write(log_content)
 
     def stop_all_tests(self):
         for p in self.processes:
