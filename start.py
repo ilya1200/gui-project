@@ -106,8 +106,9 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             return
 
         run_command = self.generate_command_for_file_names(checked_files)
-        process = subprocess.Popen(run_command, shell=True, cwd=self.current_dir)
+        process = subprocess.Popen(run_command, stdout=subprocess.PIPE, shell=True, cwd=self.current_dir)
         self.processes.append({"id": process.pid})
+        self.start_btn.setEnabled(False)
 
     def print_logs(self):
         logger_file_path = self.current_dir + "/log/"
@@ -120,7 +121,8 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
     def stop_all_tests(self):
         for p in self.processes:
             self.kill(p["id"])
-        print("All tests stopped")
+        self.processes = []
+        self.start_btn.setEnabled(True)
 
     def clear(self):
         self.logBrowser.clear()
