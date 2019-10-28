@@ -96,16 +96,18 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
     def kill(self, proc_pid):
         Popen("TASKKILL /F /PID {pid} /T".format(pid=proc_pid))
 
+    def generate_command_for_file_names(self, file_names):
+        command_list = list(map(lambda file_name: f"{self.run_file_with(file_name)} {file_name}", file_names))
+        return " && ".join(command_list)
+
     def run_checked_tests(self):
         checked_files = self.find_checked()
         if not checked_files:
             return
 
-        for file_name in checked_files:
-            print(f"Run file: {file_name}")
-            process = subprocess.Popen(f"{self.run_file_with(file_name)} {file_name}", shell=True, cwd=self.current_dir)
-
-            self.processes.append({"id": process.pid, "file_name": file_name, "process": process})
+        run_command = self.generate_command_for_file_names(checked_files)
+        process = subprocess.Popen(run_command, shell=True, cwd=self.current_dir)
+        self.processes.append({"id": process.pid})
 
     def print_logs(self):
         logger_file_path = self.current_dir + "/log/"
