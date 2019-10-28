@@ -1,9 +1,13 @@
 import subprocess
+from subprocess import Popen
 import sys
 import os
+import psutil
 from builtins import super
 
 from PyQt5 import QtWidgets, QtCore
+from PyQt5.QtGui import QCursor
+
 import pygui
 
 
@@ -11,20 +15,46 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-
         self.treeWidget.setHeaderLabels(['Files'])
         self.treeWidget.setAlternatingRowColors(True)
-
         self.current_dir = ""
+
         self.select_folder_btn.clicked.connect(self.browse_folder)
         self.start_btn.clicked.connect(self.run_checked_tests)
         self.stop_btn.clicked.connect(self.stop_all_tests)
         self.clear_btn.clicked.connect(self.clear)
-
+        self.refresh_btn.clicked.connect(self.print_logs)
         self.file_types = {
             ".js": "node",
             ".py": "python"
         }
+        self.processes = []
+
+        self.start_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.stop_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.select_folder_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.clear_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.refresh_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.stop_btn.setStyleSheet(
+            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        self.start_btn.setStyleSheet(
+            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        self.clear_btn.setStyleSheet(
+            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        self.select_folder_btn.setStyleSheet(
+            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        self.refresh_btn.setStyleSheet(
+            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        self.label_2.setOpenExternalLinks(True)
+        self.label.setOpenExternalLinks(True)
+        self.label_2.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.label.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.label_2.setStyleSheet(
+            "QLabel:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        self.label.setStyleSheet(
+            "QLabel:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        self.label_2.setText("<a href=\"https://www.linkedin.com/in/valeria-basova-58495318/\">Valeria Basov</a>")
+        self.label.setText("<a href=\"https://www.linkedin.com/in/ilya-livshits-b12295108\">Iliya Livshits</a>")
 
     def browse_folder(self):
         self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
@@ -63,12 +93,19 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
                 return self.file_types[eof]
         return ""
 
+    def kill(self, proc_pid):
+        Popen("TASKKILL /F /PID {pid} /T".format(pid=proc_pid))
+
     def run_checked_tests(self):
         checked_files = self.find_checked()
+        if not checked_files:
+            return
+
         for file_name in checked_files:
             print(f"Run file: {file_name}")
-            subprocess.call(f"{self.run_file_with(file_name)} {file_name}", shell=True, cwd=self.current_dir)
-            self.print_logs()
+            process = subprocess.Popen(f"{self.run_file_with(file_name)} {file_name}", shell=True, cwd=self.current_dir)
+
+            self.processes.append({"id": process.pid, "file_name": file_name, "process": process})
 
     def print_logs(self):
         logger_file_path = self.current_dir + "/log/"
@@ -79,6 +116,8 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
                     self.logBrowser.append(logger_file.read())
 
     def stop_all_tests(self):
+        for p in self.processes:
+            self.kill(p["id"])
         print("All tests stopped")
 
     def clear(self):
