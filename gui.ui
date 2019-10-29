@@ -36,7 +36,7 @@ border-color: beige</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 20pt &quot;Mistral&quot;;
+     <string notr="true">font: 15pt &quot;Mistral&quot;;
 background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
@@ -57,7 +57,7 @@ border-color: beige</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 20pt &quot;Mistral&quot;;
+     <string notr="true">font: 15pt &quot;Mistral&quot;;
 background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
@@ -78,7 +78,7 @@ border-color: beige</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 20pt &quot;Mistral&quot;;
+     <string notr="true">font: 15pt &quot;Mistral&quot;;
 background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
@@ -118,7 +118,7 @@ padding: 5px</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 20pt &quot;Mistral&quot;;
+     <string notr="true">font: 15pt &quot;Mistral&quot;;
 background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
@@ -147,13 +147,16 @@ border-style: outset;
 border-color: beige;
 padding: 5px</string>
     </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
+    </property>
     <column>
      <property name="text">
       <string notr="true">1</string>
      </property>
     </column>
    </widget>
-   <widget class="QPushButton" name="refresh_btn">
+   <widget class="QPushButton" name="log_btn">
     <property name="geometry">
      <rect>
       <x>520</x>
@@ -163,7 +166,7 @@ padding: 5px</string>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 20pt &quot;Mistral&quot;;
+     <string notr="true">font: 15pt &quot;Mistral&quot;;
 background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
@@ -171,7 +174,7 @@ border-style: outset;
 border-color: beige</string>
     </property>
     <property name="text">
-     <string>Refresh</string>
+     <string>Log</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -194,6 +197,15 @@ border-color: beige</string>
     <property name="text">
      <string>Ilya Livshits</string>
     </property>
+    <property name="scaledContents">
+     <bool>true</bool>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="wordWrap">
+     <bool>true</bool>
+    </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
@@ -213,7 +225,10 @@ border-style: outset;
 border-color: beige</string>
     </property>
     <property name="text">
-     <string>TextLabel</string>
+     <string>Valery Basov</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>

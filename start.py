@@ -16,26 +16,28 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
-        self.treeWidget.setHeaderLabels(['Files'])
-        self.treeWidget.setAlternatingRowColors(True)
-        self.current_dir = ""
-
-        self.select_folder_btn.clicked.connect(self.browse_folder)
-        self.start_btn.clicked.connect(self.run_checked_tests)
-        self.stop_btn.clicked.connect(self.stop_all_tests)
-        self.clear_btn.clicked.connect(self.clear)
-        self.refresh_btn.clicked.connect(self.print_logs)
         self.file_types = {
             ".js": "node",
             ".py": "python"
         }
         self.processes = []
+        self.current_dir = ""
 
+        # Event Handlers
+        self.select_folder_btn.clicked.connect(self.browse_folder)
+        self.start_btn.clicked.connect(self.run_checked_tests)
+        self.stop_btn.clicked.connect(self.stop_all_tests)
+        self.clear_btn.clicked.connect(self.clear)
+        self.log_btn.clicked.connect(self.print_logs)
+
+        # Styles
+        self.treeWidget.setHeaderLabels(['Files'])
+        self.treeWidget.setAlternatingRowColors(True)
         self.start_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.stop_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.select_folder_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.clear_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        self.refresh_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        self.log_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
         self.stop_btn.setStyleSheet(
             "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
         self.start_btn.setStyleSheet(
@@ -44,7 +46,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
         self.select_folder_btn.setStyleSheet(
             "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        self.refresh_btn.setStyleSheet(
+        self.log_btn.setStyleSheet(
             "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
         self.label_2.setOpenExternalLinks(True)
         self.label.setOpenExternalLinks(True)
@@ -119,7 +121,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
                 logger_file = open(logger_file_full_path, "r")
                 log_content = logger_file.read()
                 self.logBrowser.append(log_content)
-                with open(logger_file_path+str(date.today())+".log", "w") as other_logger_file:
+                with open(logger_file_path + str(date.today()) + ".log", "w") as other_logger_file:
                     other_logger_file.write(log_content)
 
     def stop_all_tests(self):
@@ -133,10 +135,10 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
 
 
 def main():
-    app = QtWidgets.QApplication(sys.argv)  # Новый экземпляр QApplication
-    window = ExampleApp()  # Создаём объект класса ExampleApp
-    window.show()  # Показываем окно
-    app.exec_()  # и запускаем приложение
+    app = QtWidgets.QApplication(sys.argv)
+    window = ExampleApp()
+    window.show()
+    app.exec_()
 
 
 if __name__ == '__main__':  # Если мы запускаем файл напрямую, а не импортируем

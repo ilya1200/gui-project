@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.select_folder_btn = QtWidgets.QPushButton(self.centralwidget)
         self.select_folder_btn.setGeometry(QtCore.QRect(10, 10, 211, 61))
-        self.select_folder_btn.setStyleSheet("font: 20pt \"Mistral\";\n"
+        self.select_folder_btn.setStyleSheet("font: 15pt \"Mistral\";\n"
 "background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius: 10px;\n"
 "border-width: 4px;\n"
@@ -35,7 +35,7 @@ class Ui_MainWindow(object):
         self.select_folder_btn.setObjectName("select_folder_btn")
         self.stop_btn = QtWidgets.QPushButton(self.centralwidget)
         self.stop_btn.setGeometry(QtCore.QRect(400, 10, 121, 61))
-        self.stop_btn.setStyleSheet("font: 20pt \"Mistral\";\n"
+        self.stop_btn.setStyleSheet("font: 15pt \"Mistral\";\n"
 "background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius: 10px;\n"
 "border-width: 4px;\n"
@@ -44,7 +44,7 @@ class Ui_MainWindow(object):
         self.stop_btn.setObjectName("stop_btn")
         self.start_btn = QtWidgets.QPushButton(self.centralwidget)
         self.start_btn.setGeometry(QtCore.QRect(270, 10, 131, 61))
-        self.start_btn.setStyleSheet("font: 20pt \"Mistral\";\n"
+        self.start_btn.setStyleSheet("font: 15pt \"Mistral\";\n"
 "background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius: 10px;\n"
 "border-width: 4px;\n"
@@ -63,7 +63,7 @@ class Ui_MainWindow(object):
         self.logBrowser.setObjectName("logBrowser")
         self.clear_btn = QtWidgets.QPushButton(self.centralwidget)
         self.clear_btn.setGeometry(QtCore.QRect(640, 10, 131, 61))
-        self.clear_btn.setStyleSheet("font: 20pt \"Mistral\";\n"
+        self.clear_btn.setStyleSheet("font: 15pt \"Mistral\";\n"
 "background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius: 10px;\n"
 "border-width: 4px;\n"
@@ -79,17 +79,18 @@ class Ui_MainWindow(object):
 "border-style: outset;\n"
 "border-color: beige;\n"
 "padding: 5px")
+        self.treeWidget.setAlternatingRowColors(True)
         self.treeWidget.setObjectName("treeWidget")
         self.treeWidget.headerItem().setText(0, "1")
-        self.refresh_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.refresh_btn.setGeometry(QtCore.QRect(520, 10, 121, 61))
-        self.refresh_btn.setStyleSheet("font: 20pt \"Mistral\";\n"
+        self.log_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.log_btn.setGeometry(QtCore.QRect(520, 10, 121, 61))
+        self.log_btn.setStyleSheet("font: 15pt \"Mistral\";\n"
 "background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius: 10px;\n"
 "border-width: 4px;\n"
 "border-style: outset;\n"
 "border-color: beige")
-        self.refresh_btn.setObjectName("refresh_btn")
+        self.log_btn.setObjectName("log_btn")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(320, 560, 151, 31))
         self.label.setStyleSheet("font: 12pt \"Matura MT Script Capitals\";\n"
@@ -98,6 +99,9 @@ class Ui_MainWindow(object):
 "border-width: 4px;\n"
 "border-style: outset;\n"
 "border-color: beige")
+        self.label.setScaledContents(True)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setWordWrap(True)
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(520, 560, 151, 31))
@@ -107,6 +111,7 @@ class Ui_MainWindow(object):
 "border-width: 4px;\n"
 "border-style: outset;\n"
 "border-color: beige")
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
         MainWindow.setCentralWidget(self.centralwidget)
 
@@ -120,6 +125,6 @@ class Ui_MainWindow(object):
         self.stop_btn.setText(_translate("MainWindow", "Stop"))
         self.start_btn.setText(_translate("MainWindow", "Start"))
         self.clear_btn.setText(_translate("MainWindow", "Clear"))
-        self.refresh_btn.setText(_translate("MainWindow", "Refresh"))
+        self.log_btn.setText(_translate("MainWindow", "Log"))
         self.label.setText(_translate("MainWindow", "Ilya Livshits"))
-        self.label_2.setText(_translate("MainWindow", "TextLabel"))
+        self.label_2.setText(_translate("MainWindow", "Valery Basov"))
