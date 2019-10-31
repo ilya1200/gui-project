@@ -18,8 +18,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         super().__init__()
         self.setupUi(self)
         self.file_types = {
-            ".js": "node",
-            ".py": "python"
+            ".js": "node"
         }
         self.processes = []
         self.current_dir = ""
@@ -63,32 +62,25 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         # self.label.setText("<a href=\"https://www.linkedin.com/in/ilya-livshits-b12295108\">Iliya Livshits</a>")
 
     def select_all(self):
-        root = self.treeWidget.invisibleRootItem()
-        child_count = root.childCount()
-
-        for i in range(child_count):
-            i_child = root.child(i)
-            i_child.setCheckState(0, QtCore.Qt.Checked)
+        tree_children = self.get_tree_children()
+        for file in tree_children:
+            file.setCheckState(0, QtCore.Qt.Checked)
 
     def unselect_all(self):
-        root = self.treeWidget.invisibleRootItem()
-        child_count = root.childCount()
-
-        for i in range(child_count):
-            i_child = root.child(i)
-            i_child.setCheckState(0, QtCore.Qt.Unchecked)
+        tree_children = self.get_tree_children()
+        for file in tree_children:
+            file.setCheckState(0, QtCore.Qt.Unchecked)
 
     def browse_folder(self):
         self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
         if not self.current_dir:
             return
 
-        if self.current_dir:
-            self.treeWidget.clear()
-            for file_name in os.listdir(self.current_dir):  # for each file in directory
-                if self.is_allowed_file(file_name):
-                    item = QtWidgets.QTreeWidgetItem(self.treeWidget, [file_name])
-                    item.setCheckState(0, QtCore.Qt.Unchecked)
+        self.treeWidget.clear()
+        allowed_files = filter(lambda file_name: self.is_allowed_file(file_name), os.listdir(self.current_dir))
+        for allowed_file in allowed_files:
+            item = QtWidgets.QTreeWidgetItem(self.treeWidget, [allowed_file])
+            item.setCheckState(0, QtCore.Qt.Unchecked)
 
     def is_allowed_file(self, file_name):
         if not self.file_types:
@@ -100,14 +92,24 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
 
     def find_checked(self):
         checked_items = list()
+        tree_children = self.get_tree_children()
+
+        for file in tree_children:
+            if file.checkState(0) == QtCore.Qt.Checked:
+                checked_items.append(file.text(0))
+
+        return checked_items
+
+    def get_tree_children(self):
+        tree_children = []
         root = self.treeWidget.invisibleRootItem()
         child_count = root.childCount()
 
         for i in range(child_count):
             i_child = root.child(i)
-            if i_child.checkState(0) == QtCore.Qt.Checked:
-                checked_items.append(i_child.text(0))
-        return checked_items
+            tree_children.append(i_child)
+
+        return tree_children
 
     def run_file_with(self, file_name):
         if not self.file_types:
@@ -131,7 +133,8 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             return
 
         run_command = self.generate_command_for_file_names(checked_files)
-        process = subprocess.Popen(run_command, stdout=subprocess.PIPE, shell=True, cwd=self.current_dir)
+        process = subprocess.Popen(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE,
+                                   shell=True, cwd=self.current_dir,universal_newlines=True,start_new_session=True)
         self.processes.append({"id": process.pid})
         self.start_btn.setEnabled(False)
 
