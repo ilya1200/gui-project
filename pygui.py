@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
 "border-color: beige")
         self.centralwidget.setObjectName("centralwidget")
         self.select_folder_btn = QtWidgets.QPushButton(self.centralwidget)
-        self.select_folder_btn.setGeometry(QtCore.QRect(10, 10, 211, 61))
+        self.select_folder_btn.setGeometry(QtCore.QRect(10, 10, 211, 41))
         self.select_folder_btn.setStyleSheet("font: 15pt \"Mistral\";\n"
 "background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius: 10px;\n"
@@ -113,6 +113,24 @@ class Ui_MainWindow(object):
 "border-color: beige")
         self.label_2.setAlignment(QtCore.Qt.AlignCenter)
         self.label_2.setObjectName("label_2")
+        self.select_all_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.select_all_btn.setGeometry(QtCore.QRect(10, 50, 101, 31))
+        self.select_all_btn.setStyleSheet("font: 15pt \"Mistral\";\n"
+"background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"border-radius: 10px;\n"
+"border-width: 4px;\n"
+"border-style: outset;\n"
+"border-color: beige")
+        self.select_all_btn.setObjectName("select_all_btn")
+        self.unselect_all_btn = QtWidgets.QPushButton(self.centralwidget)
+        self.unselect_all_btn.setGeometry(QtCore.QRect(110, 50, 111, 31))
+        self.unselect_all_btn.setStyleSheet("font: 15pt \"Mistral\";\n"
+"background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));\n"
+"border-radius: 10px;\n"
+"border-width: 4px;\n"
+"border-style: outset;\n"
+"border-color: beige")
+        self.unselect_all_btn.setObjectName("unselect_all_btn")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -128,3 +146,5 @@ class Ui_MainWindow(object):
         self.log_btn.setText(_translate("MainWindow", "Log"))
         self.label.setText(_translate("MainWindow", "Ilya Livshits"))
         self.label_2.setText(_translate("MainWindow", "Valery Basov"))
+        self.select_all_btn.setText(_translate("MainWindow", "All Files"))
+        self.unselect_all_btn.setText(_translate("MainWindow", "Unselect"))

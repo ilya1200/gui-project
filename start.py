@@ -30,38 +30,59 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         self.stop_btn.clicked.connect(self.stop_all_tests)
         self.clear_btn.clicked.connect(self.clear)
         self.log_btn.clicked.connect(self.print_logs)
+        self.select_all_btn.clicked.connect(self.select_all)
+        self.unselect_all_btn.clicked.connect(self.unselect_all)
 
         # Styles
         self.treeWidget.setHeaderLabels(['Files'])
         self.treeWidget.setAlternatingRowColors(True)
-        self.start_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        self.stop_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        self.select_folder_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        self.clear_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        self.log_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        self.stop_btn.setStyleSheet(
-            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        self.start_btn.setStyleSheet(
-            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        self.clear_btn.setStyleSheet(
-            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        self.select_folder_btn.setStyleSheet(
-            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        self.log_btn.setStyleSheet(
-            "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        self.label_2.setOpenExternalLinks(True)
-        self.label.setOpenExternalLinks(True)
-        self.label_2.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        self.label.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        self.label_2.setStyleSheet(
-            "QLabel:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        self.label.setStyleSheet(
-            "QLabel:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        self.label_2.setText("<a href=\"https://www.linkedin.com/in/valeria-basova-58495318/\">Valeria Basov</a>")
-        self.label.setText("<a href=\"https://www.linkedin.com/in/ilya-livshits-b12295108\">Iliya Livshits</a>")
+        # self.start_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        # self.stop_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        # self.select_folder_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        # self.clear_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        # self.log_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        # self.stop_btn.setStyleSheet(
+        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        # self.start_btn.setStyleSheet(
+        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        # self.clear_btn.setStyleSheet(
+        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        # self.select_folder_btn.setStyleSheet(
+        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        # self.log_btn.setStyleSheet(
+        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        # self.label_2.setOpenExternalLinks(True)
+        # self.label.setOpenExternalLinks(True)
+        # self.label_2.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        # self.label.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
+        # self.label_2.setStyleSheet(
+        #     "QLabel:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        # self.label.setStyleSheet(
+        #     "QLabel:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
+        # self.label_2.setText("<a href=\"https://www.linkedin.com/in/valeria-basova-58495318/\">Valeria Basov</a>")
+        # self.label.setText("<a href=\"https://www.linkedin.com/in/ilya-livshits-b12295108\">Iliya Livshits</a>")
+
+    def select_all(self):
+        root = self.treeWidget.invisibleRootItem()
+        child_count = root.childCount()
+
+        for i in range(child_count):
+            i_child = root.child(i)
+            i_child.setCheckState(0, QtCore.Qt.Checked)
+
+    def unselect_all(self):
+        root = self.treeWidget.invisibleRootItem()
+        child_count = root.childCount()
+
+        for i in range(child_count):
+            i_child = root.child(i)
+            i_child.setCheckState(0, QtCore.Qt.Unchecked)
 
     def browse_folder(self):
         self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
+        if not self.current_dir:
+            return
+
         if self.current_dir:
             self.treeWidget.clear()
             for file_name in os.listdir(self.current_dir):  # for each file in directory
