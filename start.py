@@ -120,8 +120,14 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
                 return self.file_types[eof]
         return ""
 
-    def kill(self, proc_pid):
-        Popen("TASKKILL /F /PID {pid} /T".format(pid=proc_pid))
+    def kill(self, pid):
+        try:
+            process = psutil.Process(pid)
+            for process_child in process.children(recursive=True):
+                process_child.kill()
+            process.kill()
+        except Exception as e:
+            print(f'Got exception: {e}')
 
     def generate_command_for_file_names(self, file_names):
         command_list = list(map(lambda file_name: f"{self.run_file_with(file_name)} {file_name}", file_names))
@@ -134,7 +140,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
 
         run_command = self.generate_command_for_file_names(checked_files)
         process = subprocess.Popen(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE,
-                                   shell=True, cwd=self.current_dir,universal_newlines=True,start_new_session=True)
+                                   shell=True, cwd=self.current_dir, universal_newlines=True, start_new_session=True)
         self.processes.append({"id": process.pid})
         self.start_btn.setEnabled(False)
 
