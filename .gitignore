@@ -2,5 +2,6 @@
 /.idea
 /__pycache__
 /build
+/heplers
 gui.spec
 gui.exe

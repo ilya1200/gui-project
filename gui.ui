@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>791</width>
-    <height>600</height>
+    <width>1054</width>
+    <height>728</height>
    </rect>
+  </property>
+  <property name="mouseTracking">
+   <bool>true</bool>
+  </property>
+  <property name="focusPolicy">
+   <enum>Qt::WheelFocus</enum>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -17,47 +23,156 @@
    <string notr="true">background-color: qradialgradient(spread:pad, cx:0.5, cy:0.5, radius:0.5, fx:0.5, fy:0.5, stop:0 rgba(95, 198, 203, 255), stop:1 rgba(255, 255, 255, 255));</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
    <property name="styleSheet">
     <string notr="true">font: 20pt &quot;Mistral&quot;;
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(98, 203, 163, 255), stop:1 rgba(255, 255, 255, 255));
-text-decoration: underline;
 border-radius: 10px;
 border-width: 4px;
 border-style: outset;
-border-color: beige</string>
+border-color: beige;
+text-transform: capitalize;
+text-decoration: none;</string>
    </property>
-   <widget class="QPushButton" name="select_folder_btn">
+   <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>211</width>
+      <x>800</x>
+      <y>670</y>
+      <width>171</width>
       <height>41</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true">font: 15pt &quot;Mistral&quot;;
+     <string notr="true">
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(98, 203, 163, 255), stop:1 rgba(255, 255, 255, 255));
+border-radius: 10px;
+border-width: 4px;
+border-style: outset;
+border-color: beige;
+font: 75 10pt &quot;Segoe Script&quot;;</string>
+    </property>
+    <property name="text">
+     <string>Vlaeria Basov</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QTreeWidget" name="treeWidget">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>80</y>
+      <width>371</width>
+      <height>581</height>
+     </rect>
+    </property>
+    <property name="cursor" stdset="0">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 246, 246, 246), stop:1 rgba(255, 255, 255, 255));
+font: 12pt &quot;MS Shell Dlg 2&quot;;
+border-radius: 10px;
+border-width: 8px;
+border-style: outset;
+border-color: beige;
+padding: 7px</string>
+    </property>
+    <column>
+     <property name="text">
+      <string>Files</string>
+     </property>
+     <property name="textAlignment">
+      <set>AlignCenter</set>
+     </property>
+    </column>
+   </widget>
+   <widget class="QPushButton" name="select_folder_btn">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>371</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 20pt &quot;Mistral&quot;;
+background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
+border-radius: 10px;
+border-width: 6px;
+border-style: outset;
+border-color: beige;
+
+</string>
+    </property>
+    <property name="text">
+     <string>Select Files</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="run_btn">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>10</y>
+      <width>141</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 20pt &quot;Mistral&quot;;
 background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
 border-style: outset;
-border-color: beige</string>
+border-color: beige;</string>
     </property>
     <property name="text">
-     <string>Select Folder</string>
+     <string>Run</string>
     </property>
    </widget>
    <widget class="QPushButton" name="stop_btn">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>580</x>
       <y>10</y>
-      <width>121</width>
+      <width>131</width>
       <height>61</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true">font: 15pt &quot;Mistral&quot;;
+     <string notr="true">font: 20pt &quot;Mistral&quot;;
 background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
@@ -68,57 +183,23 @@ border-color: beige</string>
      <string>Stop</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="start_btn">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>10</y>
-      <width>131</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">font: 15pt &quot;Mistral&quot;;
-background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
-border-radius: 10px;
-border-width: 4px;
-border-style: outset;
-border-color: beige</string>
-    </property>
-    <property name="text">
-     <string>Start</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="logBrowser">
-    <property name="geometry">
-     <rect>
-      <x>290</x>
-      <y>80</y>
-      <width>431</width>
-      <height>471</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 246, 246, 246), stop:1 rgba(255, 255, 255, 255));
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-border-radius: 10px;
-border-width: 6px;
-border-style: outset;
-border-color: beige;
-padding: 5px</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="clear_btn">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>640</x>
+      <x>860</x>
       <y>10</y>
-      <width>131</width>
+      <width>151</width>
       <height>61</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true">font: 15pt &quot;Mistral&quot;;
+     <string notr="true">font: 20pt &quot;Mistral&quot;;
 background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
@@ -129,150 +210,132 @@ border-color: beige</string>
      <string>Clear</string>
     </property>
    </widget>
-   <widget class="QTreeWidget" name="treeWidget">
+   <widget class="QTextBrowser" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>80</y>
-      <width>211</width>
-      <height>471</height>
+      <x>445</x>
+      <y>81</y>
+      <width>571</width>
+      <height>581</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 246, 246, 246), stop:1 rgba(255, 255, 255, 255));
-font: 8pt &quot;MS Shell Dlg 2&quot;;
-border-radius: 10px;
-border-width: 6px;
-border-style: outset;
-border-color: beige;
-padding: 5px</string>
-    </property>
-    <property name="alternatingRowColors">
+    <property name="mouseTracking">
      <bool>true</bool>
     </property>
-    <column>
-     <property name="text">
-      <string notr="true">1</string>
-     </property>
-    </column>
-   </widget>
-   <widget class="QPushButton" name="log_btn">
-    <property name="geometry">
-     <rect>
-      <x>520</x>
-      <y>10</y>
-      <width>121</width>
-      <height>61</height>
-     </rect>
+    <property name="autoFillBackground">
+     <bool>true</bool>
     </property>
     <property name="styleSheet">
-     <string notr="true">font: 15pt &quot;Mistral&quot;;
-background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
+     <string notr="true">font: 12pt &quot;MS Shell Dlg 2&quot;;
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 246, 246, 246), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
 border-style: outset;
 border-color: beige</string>
-    </property>
-    <property name="text">
-     <string>Log</string>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>560</y>
-      <width>151</width>
-      <height>31</height>
+      <x>640</x>
+      <y>670</y>
+      <width>161</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true">font: 12pt &quot;Matura MT Script Capitals&quot;;
+     <string notr="true">
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(98, 203, 163, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
 border-style: outset;
-border-color: beige</string>
+border-color: beige;
+font: 75 10pt &quot;Segoe Script&quot;;</string>
     </property>
     <property name="text">
-     <string>Ilya Livshits</string>
-    </property>
-    <property name="scaledContents">
-     <bool>true</bool>
+     <string>Iliya Livshets</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
-    </property>
-    <property name="wordWrap">
-     <bool>true</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QPushButton" name="log_btn">
     <property name="geometry">
      <rect>
-      <x>520</x>
-      <y>560</y>
+      <x>710</x>
+      <y>10</y>
       <width>151</width>
-      <height>31</height>
+      <height>61</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true">font: 12pt &quot;Matura MT Script Capitals&quot;;
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(98, 203, 163, 255), stop:1 rgba(255, 255, 255, 255));
+     <string notr="true">font: 20pt &quot;Mistral&quot;;
+background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
 border-radius: 10px;
 border-width: 4px;
 border-style: outset;
-border-color: beige</string>
+border-color: beige
+</string>
     </property>
     <property name="text">
-     <string>Valery Basov</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
+     <string>Log</string>
     </property>
    </widget>
    <widget class="QPushButton" name="select_all_btn">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>101</width>
-      <height>31</height>
+      <x>50</x>
+      <y>670</y>
+      <width>161</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true">font: 15pt &quot;Mistral&quot;;
-background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
-border-radius: 10px;
-border-width: 4px;
-border-style: outset;
-border-color: beige</string>
+     <string notr="true">font: 75 10pt &quot;Segoe Script&quot;;</string>
     </property>
     <property name="text">
-     <string>All Files</string>
+     <string>check All</string>
     </property>
    </widget>
    <widget class="QPushButton" name="unselect_all_btn">
     <property name="geometry">
      <rect>
-      <x>110</x>
-      <y>50</y>
-      <width>111</width>
-      <height>31</height>
+      <x>210</x>
+      <y>670</y>
+      <width>161</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
     <property name="styleSheet">
-     <string notr="true">font: 15pt &quot;Mistral&quot;;
-background-color: qlineargradient(spread:reflect, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(84, 203, 9, 255), stop:1 rgba(255, 255, 255, 255));
-border-radius: 10px;
-border-width: 4px;
-border-style: outset;
-border-color: beige</string>
+     <string notr="true">font: 75 10pt &quot;Segoe Script&quot;;</string>
     </property>
     <property name="text">
-     <string>Unselect</string>
+     <string>Uncheck All</string>
     </property>
    </widget>
+   <zorder>select_folder_btn</zorder>
+   <zorder>run_btn</zorder>
+   <zorder>stop_btn</zorder>
+   <zorder>clear_btn</zorder>
+   <zorder>label_2</zorder>
+   <zorder>treeWidget</zorder>
+   <zorder>listWidget</zorder>
+   <zorder>label</zorder>
+   <zorder>log_btn</zorder>
+   <zorder>select_all_btn</zorder>
+   <zorder>unselect_all_btn</zorder>
   </widget>
  </widget>
  <resources/>

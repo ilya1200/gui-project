@@ -25,7 +25,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
 
         # Event Handlers
         self.select_folder_btn.clicked.connect(self.browse_folder)
-        self.start_btn.clicked.connect(self.run_checked_tests)
+        self.run_btn.clicked.connect(self.run_checked_tests)
         self.stop_btn.clicked.connect(self.stop_all_tests)
         self.clear_btn.clicked.connect(self.clear)
         self.log_btn.clicked.connect(self.print_logs)
@@ -34,32 +34,6 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
 
         # Styles
         self.treeWidget.setHeaderLabels(['Files'])
-        self.treeWidget.setAlternatingRowColors(True)
-        # self.start_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        # self.stop_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        # self.select_folder_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        # self.clear_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        # self.log_btn.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        # self.stop_btn.setStyleSheet(
-        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        # self.start_btn.setStyleSheet(
-        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        # self.clear_btn.setStyleSheet(
-        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        # self.select_folder_btn.setStyleSheet(
-        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        # self.log_btn.setStyleSheet(
-        #     "QPushButton:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        # self.label_2.setOpenExternalLinks(True)
-        # self.label.setOpenExternalLinks(True)
-        # self.label_2.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        # self.label.setCursor(QCursor(QtCore.Qt.PointingHandCursor))
-        # self.label_2.setStyleSheet(
-        #     "QLabel:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        # self.label.setStyleSheet(
-        #     "QLabel:hover { background: qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: 0 #FAFBFE, stop: 1 #DCDEF1) }")
-        # self.label_2.setText("<a href=\"https://www.linkedin.com/in/valeria-basova-58495318/\">Valeria Basov</a>")
-        # self.label.setText("<a href=\"https://www.linkedin.com/in/ilya-livshits-b12295108\">Iliya Livshits</a>")
 
     def select_all(self):
         tree_children = self.get_tree_children()
@@ -80,8 +54,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         self.treeWidget.clear()
         allowed_files = filter(lambda file_name: self.is_allowed_file(file_name), os.listdir(self.current_dir))
         for allowed_file in allowed_files:
-            item = QtWidgets.QTreeWidgetItem(self.treeWidget, [allowed_file])
-            item.setCheckState(0, QtCore.Qt.Unchecked)
+            QtWidgets.QTreeWidgetItem(self.treeWidget, [allowed_file]).setCheckState(0, QtCore.Qt.Unchecked)
 
     def is_allowed_file(self, file_name):
         if not self.file_types:
@@ -132,7 +105,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         process = subprocess.Popen(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE,
                                    shell=True, cwd=self.current_dir, universal_newlines=True, start_new_session=True)
         self.processes.append({"id": process.pid})
-        self.start_btn.setEnabled(False)
+        self.run_btn.setEnabled(False)
 
     def print_logs(self):
         logger_file_path = self.current_dir + "/log/"
@@ -153,7 +126,7 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         for p in self.processes:
             self.kill(p["id"])
         self.processes = []
-        self.start_btn.setEnabled(True)
+        self.run_btn.setEnabled(True)
 
     def clear(self):
         self.logBrowser.clear()
