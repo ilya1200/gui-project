@@ -100,17 +100,17 @@ class Ui_MainWindow(object):
 "border-style: outset;\n"
 "border-color: beige")
         self.clear_btn.setObjectName("clear_btn")
-        self.listWidget = QtWidgets.QTextBrowser(self.centralwidget)
-        self.listWidget.setGeometry(QtCore.QRect(445, 81, 571, 581))
-        self.listWidget.setMouseTracking(True)
-        self.listWidget.setAutoFillBackground(True)
-        self.listWidget.setStyleSheet("font: 12pt \"MS Shell Dlg 2\";\n"
+        self.logBrowser = QtWidgets.QTextBrowser(self.centralwidget)
+        self.logBrowser.setGeometry(QtCore.QRect(445, 81, 571, 581))
+        self.logBrowser.setMouseTracking(True)
+        self.logBrowser.setAutoFillBackground(True)
+        self.logBrowser.setStyleSheet("font: 12pt \"MS Shell Dlg 2\";\n"
 "background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 246, 246, 246), stop:1 rgba(255, 255, 255, 255));\n"
 "border-radius: 10px;\n"
 "border-width: 4px;\n"
 "border-style: outset;\n"
 "border-color: beige")
-        self.listWidget.setObjectName("listWidget")
+        self.logBrowser.setObjectName("logBrowser")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(640, 670, 161, 41))
         self.label.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
@@ -150,7 +150,7 @@ class Ui_MainWindow(object):
         self.clear_btn.raise_()
         self.label_2.raise_()
         self.treeWidget.raise_()
-        self.listWidget.raise_()
+        self.logBrowser.raise_()
         self.label.raise_()
         self.log_btn.raise_()
         self.select_all_btn.raise_()

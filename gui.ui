@@ -210,7 +210,7 @@ border-color: beige</string>
      <string>Clear</string>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="listWidget">
+   <widget class="QTextBrowser" name="logBrowser">
     <property name="geometry">
      <rect>
       <x>445</x>
@@ -331,7 +331,7 @@ border-color: beige
    <zorder>clear_btn</zorder>
    <zorder>label_2</zorder>
    <zorder>treeWidget</zorder>
-   <zorder>listWidget</zorder>
+   <zorder>logBrowser</zorder>
    <zorder>label</zorder>
    <zorder>log_btn</zorder>
    <zorder>select_all_btn</zorder>

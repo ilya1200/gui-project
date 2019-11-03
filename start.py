@@ -1,15 +1,10 @@
-import subprocess
-from subprocess import Popen
 import sys
 import os
+from subprocess import Popen, PIPE
 import psutil
 from builtins import super
-from datetime import date
 import datetime
-
 from PyQt5 import QtWidgets, QtCore
-from PyQt5.QtGui import QCursor
-
 import pygui
 
 
@@ -82,6 +77,8 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             print(f'Got exception: {e}')
 
     def run_checked_tests(self):
+        logger_output_file_full_path = f"{self.current_dir}/log/{datetime.datetime.now().strftime('%H-%M-%S %Y-%m-%d')}.log "
+
         checked_files = list(map(lambda file: file.text(0),
                                  filter(lambda file: file.checkState(0) == QtCore.Qt.Checked,
                                         self.get_tree_children())))
@@ -90,26 +87,40 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
 
         run_command = " && ".join(
             list(map(lambda file_name: f"{self.run_file_with(file_name)} {file_name}", checked_files)))
-        process = subprocess.Popen(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE,
-                                   shell=True, cwd=self.current_dir, universal_newlines=True, start_new_session=True)
-        self.processes.append({"id": process.pid, "process": process})
-        self.run_btn.setEnabled(False)
+
+        with open(logger_output_file_full_path, "w") as logger_output_file:
+            process = Popen(run_command, stdout=logger_output_file, stderr=PIPE, stdin=PIPE,
+                            shell=True, cwd=self.current_dir)
+            self.processes.append({"id": process.pid, "process": process})
+            self.run_btn.setEnabled(False)
 
     def print_logs(self):
-        logger_file_path = f"{self.current_dir}/log/"
-        for file in os.listdir(logger_file_path):
-            if file.endswith(".log"):
-                print(file)
-                # logger_file_full_path = logger_file_path + file
-                # logger_file = open(logger_file_full_path, "r")
-                # log_content = logger_file.read()
-                # self.logBrowser.append(log_content)  # log to screen
-                #
-                # # log to file
-                # now = datetime.datetime.now().strftime("%H-%M-%S %Y-%m-%d")
-                # log_file_name = f"{logger_file_path}{now}.log"
-                # with open(log_file_name, "w") as other_logger_file:
-                #     other_logger_file.write(log_content)
+        logger_input_file_name = "results"
+        logger_input_file_full_path = f"{self.current_dir}/log/{logger_input_file_name}.log"
+        logger_output_file_full_path = f"{self.current_dir}/log/{datetime.datetime.now().strftime('%H-%M-%S %Y-%m-%d')}.log"
+        print("print_logs IN:", logger_input_file_full_path)
+        print("print_logs OUT:", logger_output_file_full_path)
+
+        # log_input_content = open(logger_input_file_full_path, "r").read()
+        # print("log_input_content")
+        # print(log_input_content)
+        # self.logBrowser.append(log_input_content)
+
+    # def print_logs(self):
+    #     logger_file_path = f"{self.current_dir}/log/"
+    #     for file in os.listdir(logger_file_path):
+    #         if file.endswith(".log"):
+    #             print(file)
+    #             logger_file_full_path = logger_file_path + file
+    #             logger_file = open(logger_file_full_path, "r")
+    #             log_content = logger_file.read()
+    #             self.logBrowser.append(log_content)  # log to screen
+    #
+    #             # log to file
+    #             now = datetime.datetime.now().strftime("%H-%M-%S %Y-%m-%d")
+    #             log_file_name = f"{logger_file_path}{now}.log"
+    #             with open(log_file_name, "w") as other_logger_file:
+    #                 other_logger_file.write(log_content)
 
     def stop_all_tests(self):
         for p in self.processes:
