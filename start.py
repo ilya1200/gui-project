@@ -21,7 +21,8 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             ".js": "node"
         }
         self.processes = []
-        self.current_dir = ""
+        self.default_dir = "C:/Users/ilya1/OneDrive/Desktop/Automation Selenium Project/Tests"
+        self.current_dir = self.default_dir
 
         # Event Handlers
         self.select_folder_btn.clicked.connect(self.browse_folder)
@@ -36,18 +37,16 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         self.treeWidget.setHeaderLabels(['Files'])
 
     def select_all(self):
-        tree_children = self.get_tree_children()
-        for file in tree_children:
+        for file in self.get_tree_children():
             file.setCheckState(0, QtCore.Qt.Checked)
 
     def unselect_all(self):
-        tree_children = self.get_tree_children()
-        for file in tree_children:
+        for file in self.get_tree_children():
             file.setCheckState(0, QtCore.Qt.Unchecked)
 
     def browse_folder(self):
-        default_dir = "C:/Users/ilya1/OneDrive/Desktop/Automation Selenium Project/Tests"
-        self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder", directory=default_dir)
+        self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder",
+                                                                      directory=self.default_dir)
         if not self.current_dir:
             return
 
@@ -57,23 +56,12 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             QtWidgets.QTreeWidgetItem(self.treeWidget, [allowed_file]).setCheckState(0, QtCore.Qt.Unchecked)
 
     def is_allowed_file(self, file_name):
-        if not self.file_types:
-            return True
-        for eof in self.file_types:
-            if file_name.endswith(eof):
-                return True
-        return False
+        return not self.file_types or len(list(filter(lambda eof: file_name.endswith(eof), self.file_types))) > 0
 
     def get_tree_children(self):
-        tree_children = []
         root = self.treeWidget.invisibleRootItem()
         child_count = root.childCount()
-
-        for i in range(child_count):
-            i_child = root.child(i)
-            tree_children.append(i_child)
-
-        return tree_children
+        return list(map(lambda i: root.child(i), range(child_count)))
 
     def run_file_with(self, file_name):
         if not self.file_types:
@@ -104,23 +92,24 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             list(map(lambda file_name: f"{self.run_file_with(file_name)} {file_name}", checked_files)))
         process = subprocess.Popen(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE,
                                    shell=True, cwd=self.current_dir, universal_newlines=True, start_new_session=True)
-        self.processes.append({"id": process.pid})
+        self.processes.append({"id": process.pid, "process": process})
         self.run_btn.setEnabled(False)
 
     def print_logs(self):
-        logger_file_path = self.current_dir + "/log/"
+        logger_file_path = f"{self.current_dir}/log/"
         for file in os.listdir(logger_file_path):
             if file.endswith(".log"):
-                logger_file_full_path = logger_file_path + file
-                logger_file = open(logger_file_full_path, "r")
-                log_content = logger_file.read()
-                self.logBrowser.append(log_content)  # log to screen
-
-                # log to file
-                now = datetime.datetime.now().strftime("%H-%M-%S %Y-%m-%d")
-                log_file_name = f"{logger_file_path}{now}.log"
-                with open(log_file_name, "w") as other_logger_file:
-                    other_logger_file.write(log_content)
+                print(file)
+                # logger_file_full_path = logger_file_path + file
+                # logger_file = open(logger_file_full_path, "r")
+                # log_content = logger_file.read()
+                # self.logBrowser.append(log_content)  # log to screen
+                #
+                # # log to file
+                # now = datetime.datetime.now().strftime("%H-%M-%S %Y-%m-%d")
+                # log_file_name = f"{logger_file_path}{now}.log"
+                # with open(log_file_name, "w") as other_logger_file:
+                #     other_logger_file.write(log_content)
 
     def stop_all_tests(self):
         for p in self.processes:
