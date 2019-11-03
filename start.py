@@ -72,7 +72,8 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             file.setCheckState(0, QtCore.Qt.Unchecked)
 
     def browse_folder(self):
-        self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder")
+        default_dir = "C:/Users/ilya1/OneDrive/Desktop/Automation Selenium Project/Tests"
+        self.current_dir = QtWidgets.QFileDialog.getExistingDirectory(self, "Select a folder", directory=default_dir)
         if not self.current_dir:
             return
 
@@ -89,16 +90,6 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
             if file_name.endswith(eof):
                 return True
         return False
-
-    def find_checked(self):
-        checked_items = list()
-        tree_children = self.get_tree_children()
-
-        for file in tree_children:
-            if file.checkState(0) == QtCore.Qt.Checked:
-                checked_items.append(file.text(0))
-
-        return checked_items
 
     def get_tree_children(self):
         tree_children = []
@@ -129,16 +120,15 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
         except Exception as e:
             print(f'Got exception: {e}')
 
-    def generate_command_for_file_names(self, file_names):
-        command_list = list(map(lambda file_name: f"{self.run_file_with(file_name)} {file_name}", file_names))
-        return " && ".join(command_list)
-
     def run_checked_tests(self):
-        checked_files = self.find_checked()
+        checked_files = list(map(lambda file: file.text(0),
+                                 filter(lambda file: file.checkState(0) == QtCore.Qt.Checked,
+                                        self.get_tree_children())))
         if not checked_files:
             return
 
-        run_command = self.generate_command_for_file_names(checked_files)
+        run_command = " && ".join(
+            list(map(lambda file_name: f"{self.run_file_with(file_name)} {file_name}", checked_files)))
         process = subprocess.Popen(run_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=subprocess.PIPE,
                                    shell=True, cwd=self.current_dir, universal_newlines=True, start_new_session=True)
         self.processes.append({"id": process.pid})
