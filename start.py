@@ -98,10 +98,10 @@ class ExampleApp(QtWidgets.QMainWindow, pygui.Ui_MainWindow):
     def print_logs(self):
         if not self.logger_output_file_full_path:
             return
-        logger_output_file = open(self.logger_output_file_full_path, "r")
-        log_content = " ".join(logger_output_file.read().split("\n"))
-        self.logBrowser.setText("")  # log to screen
-        self.logBrowser.setText(log_content)  # log to screen
+        with open(self.logger_output_file_full_path, "r") as logger_output_file:
+            log_content = " ".join(logger_output_file.read().split("\n"))
+            self.logBrowser.setText("")  # log to screen
+            self.logBrowser.setText(log_content)  # log to screen
 
     def stop_all_tests(self):
         for p in self.processes:
